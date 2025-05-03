@@ -21,8 +21,8 @@ runs:
       uses: aws-actions/aws-secretsmanager-get-secrets@ff26a0aa6bd4dd5e51326b5afb3f5f6874c958c7 # v2.0.3
       with:
         secret-ids: |
-          GITHUB_APP_ID,global/github/app/id
-          GITHUB_APP_PRIVATE_KEY,global/github/app/private_key
+          GITHUB_APP_ID,${{ inputs.github-app-id-secret-path }}
+          GITHUB_APP_PRIVATE_KEY,${{ inputs.github-app-private-key-secret-path }}
 
     - name: Create GitHub App token
       uses: actions/create-github-app-token@31c86eb3b33c9b601a1f60f98dcbfd1d70f379b4 # v1.10.3

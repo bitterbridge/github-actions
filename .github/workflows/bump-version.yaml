@@ -25,6 +25,9 @@ jobs:
       - name: Get GitHub Token
         id: get-github-token
         uses: ./get-github-token
+        with:
+          github-app-id-secret-path: ${{ vars.APP_ID_SECRET_PATH }}
+          github-app-private-key-secret-path: ${{ vars.APP_PRIVATE_KEY_SECRET_PATH }}
 
       - name: Bump version
         id: bump-version
