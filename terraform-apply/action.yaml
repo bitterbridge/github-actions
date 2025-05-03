@@ -2,7 +2,7 @@ name: Terraform Apply
 description: Run `terraform apply` to apply changes to infrastructure.
 
 inputs:
-  current-working-directory:
+  working-directory:
     description: "The path to the Terraform working directory."
     required: true
   lock-timeout:
@@ -19,7 +19,7 @@ runs:
   steps:
     - name: Terraform Apply
       shell: bash
-      current-working-directory: ${{ inputs.current-working-directory }}
+      working-directory: ${{ inputs.working-directory }}
       run: |
         terraform apply \
           -input=false \

@@ -2,7 +2,7 @@ name: Terraform Plan
 description: Run `terraform plan` to generate an execution plan for Terraform.
 
 inputs:
-  current-working-directory:
+  working-directory:
     description: "The path to the Terraform working directory."
     required: true
   lock-timeout:
@@ -30,7 +30,7 @@ runs:
     - name: Terraform Plan
       id: terraform-plan
       shell: bash
-      current-working-directory: ${{ inputs.current-working-directory }}
+      working-directory: ${{ inputs.working-directory }}
       run: |
         plan_file=$(mktemp);
         set +e;
