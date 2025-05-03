@@ -1,0 +1,17 @@
+name: Terraform Validate
+description: Run `terraform validate` to validate Terraform configurations.
+
+inputs:
+  current-working-directory:
+    description: "The path to the Terraform working directory."
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Terraform Validate
+      shell: bash
+      current-working-directory: ${{ inputs.current-working-directory }}
+      run: |
+        terraform validate \
+          -no-color;

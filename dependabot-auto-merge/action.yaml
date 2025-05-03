@@ -1,0 +1,60 @@
+name: Dependabot Auto-Merge
+description: Approve and merge Dependabot PRs automatically.
+
+# See .github/workflows/auto-merge.yml for an example of how to use this action.
+
+# Ensure that all checks that should be required for the PR to be mergeable are
+# actually required. This is important because the `gh pr merge --auto` command
+# will not merge the PR if any required checks are pending, but it will not
+# wait for any non-required checks to complete.
+
+# Note that any workflow that calls this action needs the following permissions
+# at a minimum to be able to approve and merge PRs:
+#
+# permissions:
+#   pull-requests: write
+#   contents: write
+
+inputs:
+  github-token:
+    description: "The GitHub token to use for approving and merging PRs."
+    required: true
+  package-ecosystems:
+    description: "The package ecosystems to enable auto-merge for (JSON array of strings)."
+    required: true
+  pull-request-id:
+    description: "The number of the pull request to approve and merge."
+    required: true
+
+runs:
+  using: composite
+  steps:
+    # Note that this step appears to output the package ecosystem differently
+    # from how those are specified in the dependabot.yaml
+    #
+    # For instance:
+    # - not 'github-actions', but 'github_actions'
+    # - not 'npm', but 'npm_and_yarn'
+    - name: Fetch Dependabot metadata
+      id: dependabot-metadata
+      uses: dependabot/fetch-metadata@d7267f607e9d3fb96fc2fbe83e0af444713e90b7 # v2.3.0
+      with:
+        github-token: "${{ inputs.github-token }}"
+
+    - name: Approve the PR
+      id: approve-pr
+      if: contains(fromJSON(inputs.package-ecosystems), steps.dependabot-metadata.outputs.package-ecosystem)
+      env:
+        GH_TOKEN: "${{ inputs.github-token }}"
+      shell: bash
+      run: |
+        gh pr review --approve ${{ inputs.pull-request-id }}
+
+    - name: Enable auto-merge for Dependabot PRs
+      id: enable-auto-merge
+      if: contains(fromJSON(inputs.package-ecosystems), steps.dependabot-metadata.outputs.package-ecosystem)
+      env:
+        GH_TOKEN: "${{ inputs.github-token }}"
+      shell: bash
+      run: |
+        gh pr merge --auto --merge ${{ inputs.pull-request-id }}

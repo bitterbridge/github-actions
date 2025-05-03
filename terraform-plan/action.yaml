@@ -1,0 +1,63 @@
+name: Terraform Plan
+description: Run `terraform plan` to generate an execution plan for Terraform.
+
+inputs:
+  current-working-directory:
+    description: "The path to the Terraform working directory."
+    required: true
+  lock-timeout:
+    description: "The duration to retry a lock on state (e.g. 30s, 5m, 1h)."
+    required: false
+    default: "20m"
+
+outputs:
+  plan-file:
+    description: "The path to the Terraform plan file."
+    value: ${{ steps.terraform-plan.outputs.tf-plan-file }}
+  plan-exit-code:
+    description: "The exit code from the `terraform plan` command."
+    value: ${{ steps.terraform-plan.outputs.tf-plan-exit-code }}
+  plan-did-change:
+    description: "Whether the Terraform plan has changes."
+    value: ${{ steps.terraform-plan.outputs.tf-plan-did-change }}
+  plan-did-fail:
+    description: "Whether the Terraform plan failed."
+    value: ${{ steps.terraform-plan.outputs.tf-plan-did-fail }}
+
+runs:
+  using: composite
+  steps:
+    - name: Terraform Plan
+      id: terraform-plan
+      shell: bash
+      current-working-directory: ${{ inputs.current-working-directory }}
+      run: |
+        plan_file=$(mktemp);
+        set +e;
+        terraform plan \
+          -input=false \
+          -no-color \
+          -detailed-exitcode \
+          -out="${plan_file}" \
+          -lock-timeout="${{ inputs.lock-timeout }}";
+        exit_code=$?;
+        set -e;
+        did_change="false";
+        did_fail="false";
+        if [ $exit_code -eq 2 ]; then
+          did_change="true";
+        elif [ $exit_code -eq 1 ]; then
+          did_fail="true";
+        fi;
+        echo "plan-file=$plan_file" >> $GITHUB_OUTPUT;
+        echo "plan-exit-code=$exit_code" >> $GITHUB_OUTPUT;
+        echo "plan-did-change=$did_change" >> $GITHUB_OUTPUT;
+        echo "plan-did-fail=$did_fail" >> $GITHUB_OUTPUT;
+        echo "Terraform plan exit code: $exit_code";
+        echo "Terraform plan did change: $did_change";
+        echo "Terraform plan did fail: $did_fail";
+        echo "Terraform plan output file: $plan_file";
+        if [ $did_fail == "true" ]; then
+          echo "Terraform plan failed!";
+          exit 1;
+        fi;

@@ -1,0 +1,16 @@
+name: Read Terraform Version
+description: Read the Terraform version from the .terraform-version file.
+
+outputs:
+  terraform-version:
+    description: "The Terraform version to use."
+    value: ${{ steps.read-terraform-version.outputs.terraform-version }}
+
+runs:
+  using: composite
+  steps:
+    - name: Read Terraform version from .terraform-version
+      id: read-terraform-version
+      shell: bash
+      run: |
+        echo "terraform-version=$(cat .terraform-version)" >> $GITHUB_OUTPUT

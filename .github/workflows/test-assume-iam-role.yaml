@@ -1,0 +1,33 @@
+name: Test assume-iam-role
+run-name: Test the `assume-iam-role` action.
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    concurrency: test-assume-iam-role
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Assume IAM Role with defaults
+        id: assume-iam-role
+        uses: ./assume-iam-role
+        with:
+          role-to-assume: ${{ vars.IAM_ROLE_TO_ASSUME }}
+
+      - name: Assume IAM Role and save to profile
+        id: assume-iam-role-2
+        uses: ./assume-iam-role
+        with:
+          profile: test-profile
+          role-to-assume: ${{ vars.IAM_ROLE_TO_ASSUME }}
+          save-to-profile: true
+          zap-credentials: true

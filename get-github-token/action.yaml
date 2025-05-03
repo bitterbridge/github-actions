@@ -1,0 +1,48 @@
+name: Get GitHub Token
+description: Retrieve the GitHub App ID and private key from Secrets Manager and generate a GitHub App token.
+
+inputs:
+  github-app-id-secret-path:
+    description: "The GitHub App ID secret path in Secrets Manager."
+    required: true
+  github-app-private-key-secret-path:
+    description: "The GitHub App private key secret path in Secrets Manager."
+    required: true
+
+outputs:
+  github-token:
+    description: "The generated GitHub Token."
+    value: ${{ steps.get-app-token.outputs.token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Obtain Secrets
+      uses: aws-actions/aws-secretsmanager-get-secrets@ff26a0aa6bd4dd5e51326b5afb3f5f6874c958c7 # v2.0.3
+      with:
+        secret-ids: |
+          GITHUB_APP_ID,global/github/app/id
+          GITHUB_APP_PRIVATE_KEY,global/github/app/private_key
+
+    - name: Create GitHub App token
+      uses: actions/create-github-app-token@31c86eb3b33c9b601a1f60f98dcbfd1d70f379b4 # v1.10.3
+      id: get-app-token
+      with:
+        app-id: ${{ env.GITHUB_APP_ID }}
+        private-key: ${{ env.GITHUB_APP_PRIVATE_KEY }}
+        owner: ${{ github.repository_owner }}
+
+    - name: Get GitHub App User ID
+      id: get-user-id
+      env:
+        GH_TOKEN: ${{ steps.get-app-token.outputs.token }}
+      shell: bash
+      run: |
+        echo "user-id=$(gh api "/users/${{ steps.get-app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+
+    - name: Configure Git.
+      shell: bash
+      run: |
+        git config --global url."https://x-access-token:${{ steps.get-app-token.outputs.token }}@github.com/${{ github.repository_owner }}".insteadOf "https://github.com/${{ github.repository_owner }}"
+        git config --global user.name '${{ steps.get-app-token.outputs.app-slug }}[bot]'
+        git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.get-app-token.outputs.app-slug }}[bot]@users.noreply.github.com>'

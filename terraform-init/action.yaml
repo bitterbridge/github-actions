@@ -1,0 +1,23 @@
+name: Terraform Init
+description: Run `terraform init` to initialize a Terraform working directory.
+
+inputs:
+  current-working-directory:
+    description: "The path to the Terraform working directory."
+    required: true
+  lock-timeout:
+    description: "The duration to retry a lock on state (e.g. 30s, 5m, 1h)."
+    required: false
+    default: "20m"
+
+runs:
+  using: composite
+  steps:
+    - name: Terraform Init
+      shell: bash
+      current-working-directory: ${{ inputs.current-working-directory }}
+      run: |
+        terraform init \
+          -input=false \
+          -no-color \
+          -lock-timeout=${{ inputs.lock-timeout }};

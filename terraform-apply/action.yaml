@@ -1,0 +1,29 @@
+name: Terraform Apply
+description: Run `terraform apply` to apply changes to infrastructure.
+
+inputs:
+  current-working-directory:
+    description: "The path to the Terraform working directory."
+    required: true
+  lock-timeout:
+    description: "The duration to retry a lock on state (e.g. 30s, 5m, 1h)."
+    required: false
+    default: "20m"
+  plan-file:
+    description: "The path to the Terraform plan file."
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Terraform Apply
+      shell: bash
+      current-working-directory: ${{ inputs.current-working-directory }}
+      run: |
+        terraform apply \
+          -input=false \
+          -no-color \
+          -auto-approve \
+          -lock-timeout=${{ inputs.lock-timeout }} \
+          ${{ inputs.plan-file }};

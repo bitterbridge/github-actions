@@ -1,0 +1,88 @@
+name: Assume IAM Role
+description: Assume the specified IAM role using OIDC.
+
+# This action uses OIDC, which means it needs the following in any workflow
+# that calls it directly.
+#
+# permissions:
+#   id-token: write
+#   contents: read
+
+inputs:
+  profile:
+    description: "The name of the profile to configure."
+    required: false
+    default: "default"
+  region:
+    description: "The region to use for the assumed role."
+    required: false
+    default: "us-east-1"
+  role-to-assume:
+    description: "The ARN of the role to assume via OIDC."
+    required: true
+  save-to-profile:
+    description: "Whether to save the profile in the environment."
+    required: false
+    default: "true"
+  zap-credentials:
+    description: "Whether to zap the credentials in the environment."
+    required: false
+    default: "false"
+
+outputs:
+  aws-access-key-id:
+    description: The AWS access key ID for the provided credentials
+    value: ${{ steps.aws-credentials.outputs.aws-access-key-id }}
+  aws-account-id:
+    description: The AWS account ID for the provided credentials
+    value: ${{ steps.aws-credentials.outputs.aws-account-id }}
+  aws-secret-access-key:
+    description: The AWS secret access key for the provided credentials
+    value: ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
+  aws-session-token:
+    description: The AWS session token for the provided credentials
+    value: ${{ steps.aws-credentials.outputs.aws-session-token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Configure AWS Credentials
+      id: aws-credentials
+      uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+      with:
+        output-credentials: ${{ inputs.save-to-profile == 'true' }}
+        role-to-assume: ${{ inputs.role-to-assume }}
+        role-skip-session-tagging: true
+        aws-region: ${{ inputs.region }}
+
+    - name: Save to Profile
+      id: save-to-profile
+      if: inputs.save-to-profile == 'true'
+      shell: bash
+      run: |
+        echo "Configuring AWS Profile ${{ inputs.profile }}"
+        aws configure set --profile ${{ inputs.profile }} \
+          region ${{ inputs.region }}
+        aws configure set --profile ${{ inputs.profile }} \
+          aws_access_key_id ${{ steps.aws-credentials.outputs.aws-access-key-id }}
+        aws configure set --profile ${{ inputs.profile }} \
+          aws_secret_access_key ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
+        aws configure set --profile ${{ inputs.profile }} \
+          aws_session_token ${{ steps.aws-credentials.outputs.aws-session-token }}
+
+    - name: Zap Credentials
+      if: inputs.zap-credentials == 'true'
+      shell: bash
+      run: |
+        echo "Zapping AWS Environment Variables"
+        echo AWS_ACCESS_KEY_ID="this-value-has-been-set-to-invalid-to-prevent-wrong-creds-from-being-used" >> $GITHUB_ENV
+        echo AWS_SECRET_ACCESS_KEY="this-value-has-been-set-to-invalid-to-prevent-wrong-creds-from-being-used" >> $GITHUB_ENV
+        echo AWS_SESSION_TOKEN="this-value-has-been-set-to-invalid-to-prevent-wrong-creds-from-being-used" >> $GITHUB_ENV
+
+    - name: Who Am I?
+      id: whoami
+      if: inputs.save-to-profile == 'true'
+      shell: bash
+      continue-on-error: true
+      run: |
+        aws sts --profile ${{ inputs.profile }} get-caller-identity

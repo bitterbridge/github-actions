@@ -1,0 +1,29 @@
+name: Continuous Delivery
+on:
+  push:
+    branches:
+      - main
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  setup:
+    name: "Setup"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+  test-assume-iam-role:
+    name: "Test Assume IAM Role"
+    needs: [setup]
+    uses: ./.github/workflows/test-assume-iam-role.yaml
+
+  bump-version:
+    name: "Bump version"
+    needs: [setup, test-assume-iam-role]
+    uses: ./.github/workflows/bump-version.yaml

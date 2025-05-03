@@ -1,0 +1,69 @@
+name: Bump Version and Push Tag
+description: Bumps the version and pushes a tag to the repository.
+
+# Bumping
+#
+#   Manual Bumping: Any commit message that includes #major, #minor, #patch, or #none
+#   will trigger the respective version bump. If two or more are present, the highest-
+#   ranking one will take precedence. If #none is contained in the merge commit
+#   message, it will skip bumping regardless of DEFAULT_BUMP.
+#
+#   Automatic Bumping: If no #major, #minor or #patch tag is contained in the merge
+#   commit message, it will bump whichever DEFAULT_BUMP is set to (which is minor by
+#   default). Disable this by setting DEFAULT_BUMP to none.
+#
+#   Note: This action will not bump the tag if the HEAD commit has already been tagged.
+#
+# Workflow
+#
+# - Add this action to your repo
+# - Commit some changes
+# - Either push to main or open a PR
+# - On push (or merge), the action will:
+#   - Get latest tag
+#   - Bump tag with minor version unless the merge commit message contains #major or #patch
+#   - Push tag to GitHub
+#
+# If triggered on your repo's default branch (master or main if unchanged), the bump
+#   version will be a release tag. see issue 266.
+#
+# If triggered on any other branch, a prerelease will be generated, depending on the bump,
+#   starting with *-<PRERELEASE_SUFFIX>.1, *-<PRERELEASE_SUFFIX>.2, ...
+#
+# To create a repository release you need another workflow like automatic-releases.
+
+inputs:
+  dry-run:
+    description: "Whether to run the action in dry-run mode."
+    required: false
+    default: 'false'
+  github-token:
+    description: "The GitHub token to use for pushing the tag."
+    required: true
+
+outputs:
+  new_tag:
+    description: "The value of the newly created tag."
+    value: ${{ steps.bump-version.outputs.new_tag }}
+  old_tag:
+    description: "The value of the last semantic version tag before the version bump. Empty if no version bump is performed."
+    value: ${{ steps.bump-version.outputs.old_tag }}
+  tag:
+    description: "The value of the latest tag after running this action."
+    value: ${{ steps.bump-version.outputs.tag }}
+  part:
+    description: "The part of version which was bumped."
+    value: ${{ steps.bump-version.outputs.part }}
+
+runs:
+  using: composite
+  steps:
+
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@f278d49d30cdd8775cc3e7dd00b5ee11686ee297 # v1.71.0
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        DEFAULT_BUMP: patch
+        TAG_CONTEXT: repo
+        WITH_V: true
+        DRY_RUN: ${{ inputs.dry-run == 'true' }}

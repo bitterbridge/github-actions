@@ -1,0 +1,33 @@
+name: Bump version
+run-name: Bump version
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Assume IAM Role
+        id: assume-iam-role
+        uses: ./assume-iam-role
+        with:
+          role-to-assume: ${{ vars.IAM_ROLE_TO_ASSUME }}
+
+      - name: Get GitHub Token
+        id: get-github-token
+        uses: ./get-github-token
+
+      - name: Bump version
+        id: bump-version
+        uses: ./bump-version
+        with:
+          github-token: ${{ steps.get-github-token.outputs.github-token}}
