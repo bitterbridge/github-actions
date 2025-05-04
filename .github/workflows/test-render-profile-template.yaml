@@ -1,5 +1,5 @@
-name: Test format-org-repos-info-md
-run-name: Test the `format-org-repos-info-md` action
+name: Test render-profile-template
+run-name: Test the `render-profile-template` action
 
 on:
   workflow_call:
@@ -43,11 +43,23 @@ jobs:
         with:
           repos: ${{ steps.get-org-repos-info.outputs.repos }}
 
-      - name: Show Formatted Org Repos Info
-        id: show-format-org-repos-info-md
+      - name: Render Profile Template
+        id: render-profile-template
+        uses: ./render-profile-template
+        with:
+          owner: 'bitterbridge'
+          repo: '.github'
+          path: 'profile/README.md.template'
+          substitutions: |
+            {
+              "repositories": "${{ steps.format-org-repos-info-md.outputs.markdown }}"
+            }
+
+      - name: Show Rendered Profile Template
+        id: show-render-profile-template
         shell: bash
         run: |
-          echo "The formatted info for the repositories is:"
-          echo "----------------------------------------"
-          echo "${{ steps.format-org-repos-info-md.outputs.markdown }}"
-          echo "----------------------------------------"
+          echo "The rendered profile template is:"
+          echo "----------------------------------"
+          echo "${{ steps.render-profile-template.outputs.rendered }}"
+          echo "----------------------------------"

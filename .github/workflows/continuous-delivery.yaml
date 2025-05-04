@@ -44,6 +44,11 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/test-format-org-repos-info-md.yaml
 
+  test-render-profile-template:
+    name: "Test Render Profile Template"
+    needs: [setup]
+    uses: ./.github/workflows/test-render-profile-template.yaml
+
   bump-version:
     name: "Bump version"
     needs:
@@ -52,4 +57,5 @@ jobs:
       - test-get-repo-info
       - test-get-org-repos-info
       - test-format-org-repos-info-md
+      - test-render-profile-template
     uses: ./.github/workflows/bump-version.yaml

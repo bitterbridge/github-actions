@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@octokit/rest": "^21.1.1"
+  }
+}

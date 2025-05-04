@@ -1,0 +1,24 @@
+name: "Render Profile README Template"
+description: "Substitutes values into a README template file from a repo"
+
+inputs:
+  owner:
+    required: true
+    description: "Owner of the repository"
+  repo:
+    required: true
+    description: "Name of the repository"
+  path:
+    required: true
+    description: "Path to the template file in the repo"
+  substitutions:
+    required: true
+    description: "JSON object of key-value replacements"
+
+outputs:
+  rendered:
+    description: "Rendered Markdown output"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

@@ -42,3 +42,8 @@ jobs:
     name: "Test Format Org Repos Info MD"
     needs: [setup]
     uses: ./.github/workflows/test-format-org-repos-info-md.yaml
+
+  test-render-profile-template:
+    name: "Test Render Profile Template"
+    needs: [setup]
+    uses: ./.github/workflows/test-render-profile-template.yaml
