@@ -31776,17 +31776,12 @@ const { Octokit } = __nccwpck_require__(2259);
     });
 
     const template = Buffer.from(contentResp.data.content, 'base64').toString();
-    console.log(`Template content: ${template}`);
-    console.log(`Substitutions: ${JSON.stringify(substitutions)}`);
 
     let markdown = template;
     for (const [key, value] of Object.entries(substitutions)) {
       const pattern = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
-      console.log(`Replacing ${pattern} with ${value}`);
       markdown = markdown.replace(pattern, value);
-      console.log(`Updated markdown: ${markdown}`);
     }
-    console.log(`Final markdown: ${markdown}`);
     core.setOutput('markdown', markdown);
   } catch (err) {
     core.setFailed(`Template rendering failed: ${err.message}`);
