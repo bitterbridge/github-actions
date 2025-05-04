@@ -1,0 +1,19 @@
+name: Get Repo Emoji
+description: Get the emoji for a given repository.
+
+inputs:
+  owner:
+    description: "The owner of the repository."
+    required: true
+  repo:
+    description: "The name of the repository."
+    required: true
+
+outputs:
+  emoji:
+    description: "The emoji for the repository."
+    value: ${{ steps.get-emoji.outputs.emoji }}
+
+runs:
+  using: "node20"
+  main: "scripts/get-repo-emoji.js"
