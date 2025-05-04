@@ -1,0 +1,18 @@
+name: "Get Repo Info"
+description: "Fetch name, description, emoji, and other metadata for a repository"
+
+inputs:
+  repo:
+    required: true
+    description: "The name of the repository"
+  owner:
+    required: true
+    description: "The owner or organization"
+
+outputs:
+  info:
+    description: "A JSON string with repo info"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

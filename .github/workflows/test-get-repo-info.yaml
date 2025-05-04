@@ -1,5 +1,5 @@
 name: Test get-repo-emoji
-description: Test the `get-repo-emoji` action.
+run-name: Test the `get-repo-emoji` action
 
 on:
   workflow_call:
@@ -29,17 +29,17 @@ jobs:
           github-app-id-secret-path: ${{ vars.APP_ID_SECRET_PATH }}
           github-app-private-key-secret-path: ${{ vars.APP_PRIVATE_KEY_SECRET_PATH }}
 
-      - name: Get Repo Emoji
-        id: get-emoji
-        uses: ./get-repo-emoji
+      - name: Get Repo Info
+        id: get-info
+        uses: ./get-repo-info
         env:
           GITHUB_TOKEN: ${{ steps.get-github-token.outputs.github-token }}
         with:
           repo: 'github-actions'
           owner: 'bitterbridge'
 
-      - name: Show Repo Emoji
-        id: show-emoji
+      - name: Show Repo Info
+        id: show-info
         shell: bash
         run: |
-          echo "The emoji for the repository is: ${{ steps.get-emoji.outputs.emoji }}"
+          echo "The info for the repository is: ${{ steps.get-info.outputs.info }}"
