@@ -35,7 +35,7 @@ runs:
       id: format-webring-md
       uses: bitterbridge/github-actions/format-webring-md@main
       with:
-        owner: ${{ inputs.owner }}
+        owner: 'bitterbridge' # This is static, as the webring is hosted in the bitterbridge org
         repo: '.github'
 
     - name: Build Profile README Template Substitutions
