@@ -1,5 +1,5 @@
-name: "Update Profile README via GitHub API"
-description: "Updates the profile/README.md file in a repository using the GitHub API"
+name: "Write Profile README"
+description: "Writes the profile/README.md file in a repository"
 
 inputs:
   owner:

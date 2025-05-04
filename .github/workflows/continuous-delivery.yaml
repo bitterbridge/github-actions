@@ -49,6 +49,16 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/test-render-profile-template.yaml
 
+  test-write-profile-readme:
+    name: "Test Write Profile README"
+    needs: [setup]
+    uses: ./.github/workflows/test-write-profile-readme.yaml
+
+  test-update-profile-readme:
+    name: "Test Update Profile README"
+    needs: [setup]
+    uses: ./.github/workflows/test-update-profile-readme.yaml
+
   bump-version:
     name: "Bump version"
     needs:
@@ -58,4 +68,6 @@ jobs:
       - test-get-org-repos-info
       - test-format-org-repos-info-md
       - test-render-profile-template
+      - test-write-profile-readme
+      - test-update-profile-readme
     uses: ./.github/workflows/bump-version.yaml

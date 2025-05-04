@@ -47,3 +47,13 @@ jobs:
     name: "Test Render Profile Template"
     needs: [setup]
     uses: ./.github/workflows/test-render-profile-template.yaml
+
+  test-write-profile-readme:
+    name: "Test Write Profile README"
+    needs: [setup]
+    uses: ./.github/workflows/test-write-profile-readme.yaml
+
+  test-update-profile-readme:
+    name: "Test Update Profile README"
+    needs: [setup]
+    uses: ./.github/workflows/test-update-profile-readme.yaml
