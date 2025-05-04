@@ -35895,7 +35895,7 @@ const { Buffer: scripts_Buffer } = __nccwpck_require__(181);
 
     const links = parsed.webring.map(entry => {
       const emoji = entry.emoji || '🔗';
-      return `${emoji} [${entry.name}](${entry.url})`;
+      return `${emoji}\u00A0[${entry.name}](${entry.url})`;
     });
     console.debug(`Parsed webring entries: ${JSON.stringify(links)}`);
 
