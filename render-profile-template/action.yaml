@@ -16,7 +16,7 @@ inputs:
     description: "JSON object of key-value replacements"
 
 outputs:
-  rendered:
+  markdown:
     description: "Rendered Markdown output"
 
 runs:

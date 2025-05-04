@@ -1,0 +1,27 @@
+name: "Update Profile README via GitHub API"
+description: "Updates the profile/README.md file in a repository using the GitHub API"
+
+inputs:
+  owner:
+    required: true
+    description: "Owner of the repository"
+  repo:
+    required: true
+    description: "Name of the repository"
+  path:
+    required: false
+    default: "profile/README.md"
+  content:
+    required: true
+    description: "The content to write to the file"
+  message:
+    required: false
+    default: "Update profile README"
+
+outputs:
+  updated:
+    description: "true if the file was updated, otherwise false"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

@@ -1,5 +1,5 @@
-name: Test render-profile-template
-run-name: Test the `render-profile-template` action
+name: Test write-profile-readme
+run-name: Test the `write-profile-readme` action
 
 on:
   workflow_call:
@@ -58,11 +58,11 @@ jobs:
           path: 'profile/README.md.template'
           substitutions: ${{ steps.build-profile-readme-template-substitutions.outputs.substitutions }}
 
-      - name: Show Rendered Profile Template
-        id: show-render-profile-template
-        shell: bash
-        run: |
-          echo "The rendered profile template is:"
-          echo "----------------------------------"
-          echo "${{ steps.render-profile-template.outputs.markdown }}"
-          echo "----------------------------------"
+      - name: Write Profile README
+        id: write-profile-readme
+        uses: ./write-profile-readme
+        with:
+          owner: 'bitterbridge'
+          repo: '.github'
+          content: ${{ steps.render-profile-template.outputs.markdown }}
+
