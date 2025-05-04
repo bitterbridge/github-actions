@@ -19,13 +19,13 @@ const { Octokit } = require('@octokit/rest');
 
     const template = Buffer.from(contentResp.data.content, 'base64').toString();
 
-    let rendered = template;
+    let markdown = template;
     for (const [key, value] of Object.entries(substitutions)) {
-      const pattern = new RegExp(`\{\{\\s*${key}\\s*\}\}`, 'g');
-      rendered = rendered.replace(pattern, value);
+      const pattern = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
+      markdown = markdown.replace(pattern, value);
     }
 
-    core.setOutput('rendered', rendered);
+    core.setOutput('markdown', markdown);
   } catch (err) {
     core.setFailed(`Template rendering failed: ${err.message}`);
   }
