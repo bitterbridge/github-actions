@@ -23,7 +23,6 @@ jobs:
         with:
           role-to-assume: ${{ vars.IAM_ROLE_TO_ASSUME }}
 
-
       - name: Get GitHub Token
         id: get-github-token
         uses: ./get-github-token
@@ -33,7 +32,7 @@ jobs:
 
       - name: Get Repo Emoji
         id: get-emoji
-        uses: bitterbridge/github-actions/get-repo-emoji@main
+        uses: ./get-repo-emoji
         env:
           GITHUB_TOKEN: ${{ steps.get-github-token.outputs.github-token }}
         with:
