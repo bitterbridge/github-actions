@@ -35904,6 +35904,7 @@ const { Buffer: scripts_Buffer } = __nccwpck_require__(181);
     console.debug(`Formatted markdown: ${markdown}`);
 
     core.setOutput('markdown', markdown);
+    core.setOutput('base64', scripts_Buffer.from(markdown).toString('base64'));
   } catch (err) {
     core.setFailed(`Failed to format webring: ${err.message}`);
   }

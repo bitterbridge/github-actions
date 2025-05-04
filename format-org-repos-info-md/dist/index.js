@@ -27572,6 +27572,7 @@ const core = __nccwpck_require__(2003);
     const markdown = lines.join('\n') + '\n';
     console.debug(`Formatted markdown: ${markdown}`);
     core.setOutput('markdown', markdown);
+    core.setOutput('base64', Buffer.from(markdown).toString('base64'));
   } catch (err) {
     core.setFailed(`Failed to format markdown: ${err.message}`);
   }

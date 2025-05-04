@@ -12,6 +12,8 @@ inputs:
 outputs:
   markdown:
     description: "Formatted Markdown string for the webring"
+  base64:
+    description: "Base64 encoded Markdown string for the webring"
 
 runs:
   using: "node20"

@@ -42,8 +42,8 @@ runs:
       id: build-profile-readme-template-substitutions
       uses: bitterbridge/github-actions/build-profile-template-substitutions@main
       with:
-        repositories: ${{ steps.format-org-repos-info-md.outputs.markdown }}
-        webring: ${{ steps.format-webring-md.outputs.markdown }}
+        repositories: ${{ steps.format-org-repos-info-md.outputs.base64 }}
+        webring: ${{ steps.format-webring-md.outputs.base64 }}
 
     - name: Render Profile Template
       id: render-profile-template

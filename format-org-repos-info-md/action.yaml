@@ -9,6 +9,8 @@ inputs:
 outputs:
   markdown:
     description: "Markdown string listing the repos"
+  base64:
+    description: "Base64 encoded markdown string"
 
 runs:
   using: "node20"

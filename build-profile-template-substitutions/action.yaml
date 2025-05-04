@@ -4,10 +4,10 @@ description: "Builds a JSON object for substitutions in a README template file f
 inputs:
   repositories:
     required: true
-    description: "The markdown for the repositories."
+    description: "The markdown for the repositories, base64-encoded."
   webring:
     required: true
-    description: "The markdown for the webring."
+    description: "The markdown for the webring, base64-encoded."
 
 outputs:
   substitutions:
@@ -24,6 +24,6 @@ runs:
         result-encoding: string
         script: |
           return JSON.stringify({
-            repositories: `${{ toJson(inputs.repositories) }}`,
-            webring: `${{ toJson(inputs.webring) }}`,
+            repositories: `${{ inputs.repositories }}`,
+            webring: `${{ inputs.webring }}`,
           });
