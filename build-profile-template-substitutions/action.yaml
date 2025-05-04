@@ -24,6 +24,6 @@ runs:
         result-encoding: string
         script: |
           return JSON.stringify({
-            repositories: `${{ inputs.repositories }}`,
-            webring: `${{ inputs.webring }}`,
+            repositories: `${{ toJson(inputs.repositories) }}`,
+            webring: `${{ toJson(inputs.webring) }}`,
           });

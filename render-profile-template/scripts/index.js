@@ -24,7 +24,7 @@ const { Octokit } = require('@octokit/rest');
     let markdown = template;
     for (const [key, value] of Object.entries(substitutions)) {
       const pattern = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
-      markdown = markdown.replace(pattern, value);
+      markdown = markdown.replace(pattern, JSON.parse(value));
     }
     core.setOutput('markdown', markdown);
     console.debug(`Rendered markdown: ${markdown}`);
