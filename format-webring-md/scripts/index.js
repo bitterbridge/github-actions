@@ -29,7 +29,8 @@ const { Buffer } = require('buffer');
 
     const links = parsed.webring.map(entry => {
       const emoji = entry.emoji || '🔗';
-      return `${emoji}\u00A0[${entry.name}](${entry.url})`;
+      const paddedEmoji = `<span style="display:inline-block; min-width: 2em;">${emoji}</span>`;
+      return `${paddedEmoji}[${entry.name}](${entry.url})`;
     });
     console.debug(`Parsed webring entries: ${JSON.stringify(links)}`);
 
