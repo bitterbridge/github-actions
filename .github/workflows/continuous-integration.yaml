@@ -22,3 +22,8 @@ jobs:
     name: "Test Assume IAM Role"
     needs: [setup]
     uses: ./.github/workflows/test-assume-iam-role.yaml
+
+  test-get-repo-emoji:
+    name: "Test Get Repo Emoji"
+    needs: [setup]
+    uses: ./.github/workflows/test-get-repo-emoji.yaml
