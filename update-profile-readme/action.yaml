@@ -37,6 +37,13 @@ runs:
         with:
           repositories: ${{ steps.format-org-repos-info-md.outputs.markdown }}
 
+      - name: Format Webring Markdown
+        id: format-webring-md
+        uses: ./format-webring-md
+        with:
+          owner: ${{ inputs.owner }}
+          repo: '.github'
+
       - name: Render Profile Template
         id: render-profile-template
         uses: ./render-profile-template
@@ -45,6 +52,7 @@ runs:
           repo: '.github'
           path: 'profile/README.md.template'
           substitutions: ${{ steps.build-profile-readme-template-substitutions.outputs.substitutions }}
+          webring: ${{ steps.format-webring-md.outputs.markdown }}
 
       - name: Write Profile README
         id: write-profile-readme
