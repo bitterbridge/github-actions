@@ -33,10 +33,16 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/test-get-repo-info.yaml
 
+  test-get-org-repos-info:
+    name: "Test Get Org Repos Info"
+    needs: [setup]
+    uses: ./.github/workflows/test-get-org-repos-info.yaml
+
   bump-version:
     name: "Bump version"
     needs:
       - test-assume-iam-role
       - test-get-repo-emoji
       - test-get-repo-info
+      - test-get-org-repos-info
     uses: ./.github/workflows/bump-version.yaml

@@ -32,3 +32,8 @@ jobs:
     name: "Test Get Repo Info"
     needs: [setup]
     uses: ./.github/workflows/test-get-repo-info.yaml
+
+  test-get-org-repos-info:
+    name: "Test Get Org Repos Info"
+    needs: [setup]
+    uses: ./.github/workflows/test-get-org-repos-info.yaml

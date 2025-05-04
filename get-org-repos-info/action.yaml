@@ -1,0 +1,15 @@
+name: "Get Organization Repositories Info"
+description: "Fetch name, description, emoji, and other metadata for all repositories in an organization"
+
+inputs:
+  owner:
+    required: true
+    description: "The owner or organization"
+
+outputs:
+  repos:
+    description: "A JSON string with with all repo info"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

@@ -25,7 +25,6 @@ const { Octokit } = require('@octokit/rest');
       });
       emoji = Buffer.from(emojiContent.data.content, 'base64').toString().trim();
     } catch (_) {
-      // fallback stays as 📁
     }
 
     const info = {
