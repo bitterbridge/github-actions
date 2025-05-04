@@ -43,6 +43,12 @@ jobs:
         with:
           repos: ${{ steps.get-org-repos-info.outputs.repos }}
 
+      - name: Build Profile README Template Substitutions
+        id: build-profile-readme-template-substitutions
+        uses: ./build-profile-template-substitutions
+        with:
+          repositories: ${{ steps.format-org-repos-info-md.outputs.markdown }}
+
       - name: Render Profile Template
         id: render-profile-template
         uses: ./render-profile-template
@@ -50,10 +56,7 @@ jobs:
           owner: 'bitterbridge'
           repo: '.github'
           path: 'profile/README.md.template'
-          substitutions: |
-            {
-              "repositories": "${{ steps.format-org-repos-info-md.outputs.markdown }}"
-            }
+          substitutions: ${{ steps.build-profile-readme-template-substitutions.outputs.substitutions }}
 
       - name: Show Rendered Profile Template
         id: show-render-profile-template
