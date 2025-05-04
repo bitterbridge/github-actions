@@ -28,11 +28,6 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/test-get-repo-emoji.yaml
 
-  test-write-profile-readme:
-    name: "Test Write Profile README"
-    needs: [setup]
-    uses: ./.github/workflows/test-write-profile-readme.yaml
-
   test-update-profile-readme:
     name: "Test Update Profile README"
     needs: [setup]
