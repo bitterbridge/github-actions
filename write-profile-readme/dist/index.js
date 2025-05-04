@@ -31767,7 +31767,7 @@ const crypto = __nccwpck_require__(6982);
 
     const owner = core.getInput('owner');
     const repo = core.getInput('repo');
-    const path = core.getInput('path');
+    const path = decodeURI(core.getInput('path'));
     const content = core.getInput('content');
     const message = core.getInput('message');
 

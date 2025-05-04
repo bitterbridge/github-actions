@@ -28,26 +28,6 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/test-get-repo-emoji.yaml
 
-  test-get-repo-info:
-    name: "Test Get Repo Info"
-    needs: [setup]
-    uses: ./.github/workflows/test-get-repo-info.yaml
-
-  test-get-org-repos-info:
-    name: "Test Get Org Repos Info"
-    needs: [setup]
-    uses: ./.github/workflows/test-get-org-repos-info.yaml
-
-  test-format-org-repos-info-md:
-    name: "Test Format Org Repos Info MD"
-    needs: [setup]
-    uses: ./.github/workflows/test-format-org-repos-info-md.yaml
-
-  test-render-profile-template:
-    name: "Test Render Profile Template"
-    needs: [setup]
-    uses: ./.github/workflows/test-render-profile-template.yaml
-
   test-write-profile-readme:
     name: "Test Write Profile README"
     needs: [setup]
