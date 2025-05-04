@@ -31779,7 +31779,7 @@ const { Octokit } = __nccwpck_require__(2259);
 
     let rendered = template;
     for (const [key, value] of Object.entries(substitutions)) {
-      const pattern = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
+      const pattern = new RegExp(`\{\{\\s*${key}\\s*\}\}`, 'g');
       rendered = rendered.replace(pattern, value);
     }
 

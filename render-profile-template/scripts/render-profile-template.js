@@ -21,7 +21,7 @@ const { Octokit } = require('@octokit/rest');
 
     let rendered = template;
     for (const [key, value] of Object.entries(substitutions)) {
-      const pattern = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
+      const pattern = new RegExp(`\{\{\\s*${key}\\s*\}\}`, 'g');
       rendered = rendered.replace(pattern, value);
     }
 
