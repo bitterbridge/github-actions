@@ -19,7 +19,7 @@ runs:
   steps:
     - name: Get Org Repos Info
       id: get-org-repos-info
-      uses: ./get-org-repos-info/
+      uses: bitterbridge/github-actions/get-org-repos-info@main
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
@@ -27,27 +27,27 @@ runs:
 
     - name: Format Org Repos Info
       id: format-org-repos-info-md
-      uses: ./format-org-repos-info-md/
+      uses: bitterbridge/github-actions/format-org-repos-info-md@main
       with:
         repos: ${{ steps.get-org-repos-info.outputs.repos }}
 
     - name: Format Webring Markdown
       id: format-webring-md
-      uses: ./format-webring-md/
+      uses: bitterbridge/github-actions/format-webring-md@main
       with:
         owner: ${{ inputs.owner }}
         repo: '.github'
 
     - name: Build Profile README Template Substitutions
       id: build-profile-readme-template-substitutions
-      uses: ./build-profile-template-substitutions/
+      uses: bitterbridge/github-actions/build-profile-template-substitutions@main
       with:
         repositories: ${{ steps.format-org-repos-info-md.outputs.markdown }}
         webring: ${{ steps.format-webring-md.outputs.markdown }}
 
     - name: Render Profile Template
       id: render-profile-template
-      uses: ./render-profile-template/
+      uses: bitterbridge/github-actions/render-profile-template@main
       with:
         owner: ${{ inputs.owner }}
         repo: '.github'
@@ -56,7 +56,7 @@ runs:
 
     - name: Write Profile README
       id: write-profile-readme
-      uses: ./write-profile-readme/
+      uses: bitterbridge/github-actions/write-profile-readme@main
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
