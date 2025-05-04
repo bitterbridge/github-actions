@@ -37,3 +37,8 @@ jobs:
     name: "Test Get Org Repos Info"
     needs: [setup]
     uses: ./.github/workflows/test-get-org-repos-info.yaml
+
+  test-format-org-repos-info-md:
+    name: "Test Format Org Repos Info MD"
+    needs: [setup]
+    uses: ./.github/workflows/test-format-org-repos-info-md.yaml

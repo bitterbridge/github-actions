@@ -38,6 +38,12 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/test-get-org-repos-info.yaml
 
+
+  test-format-org-repos-info-md:
+    name: "Test Format Org Repos Info MD"
+    needs: [setup]
+    uses: ./.github/workflows/test-format-org-repos-info-md.yaml
+
   bump-version:
     name: "Bump version"
     needs:
@@ -45,4 +51,5 @@ jobs:
       - test-get-repo-emoji
       - test-get-repo-info
       - test-get-org-repos-info
+      - test-format-org-repos-info-md
     uses: ./.github/workflows/bump-version.yaml

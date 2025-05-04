@@ -1,0 +1,15 @@
+name: "Format Repo Info as Markdown"
+description: "Converts repo info JSON array into a Markdown list"
+
+inputs:
+  repos:
+    required: true
+    description: "JSON array of repo info objects"
+
+outputs:
+  markdown:
+    description: "Markdown string listing the repos"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
