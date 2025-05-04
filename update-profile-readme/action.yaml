@@ -17,49 +17,52 @@ outputs:
 runs:
   using: composite
   steps:
-      - name: Get Org Repos Info
-        id: get-org-repos-info
-        uses: ./get-org-repos-info
-        env:
-          GITHUB_TOKEN: ${{ inputs.github-token }}
-        with:
-          owner: ${{ inputs.owner }}
+    - name: Checkout code
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Format Org Repos Info
-        id: format-org-repos-info-md
-        uses: ./format-org-repos-info-md
-        with:
-          repos: ${{ steps.get-org-repos-info.outputs.repos }}
+    - name: Get Org Repos Info
+      id: get-org-repos-info
+      uses: ./get-org-repos-info
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      with:
+        owner: ${{ inputs.owner }}
 
-      - name: Format Webring Markdown
-        id: format-webring-md
-        uses: ./format-webring-md
-        with:
-          owner: ${{ inputs.owner }}
-          repo: '.github'
+    - name: Format Org Repos Info
+      id: format-org-repos-info-md
+      uses: ./format-org-repos-info-md
+      with:
+        repos: ${{ steps.get-org-repos-info.outputs.repos }}
 
-      - name: Build Profile README Template Substitutions
-        id: build-profile-readme-template-substitutions
-        uses: ./build-profile-template-substitutions
-        with:
-          repositories: ${{ steps.format-org-repos-info-md.outputs.markdown }}
-          webring: ${{ steps.format-webring-md.outputs.markdown }}
+    - name: Format Webring Markdown
+      id: format-webring-md
+      uses: ./format-webring-md
+      with:
+        owner: ${{ inputs.owner }}
+        repo: '.github'
 
-      - name: Render Profile Template
-        id: render-profile-template
-        uses: ./render-profile-template
-        with:
-          owner: ${{ inputs.owner }}
-          repo: '.github'
-          path: 'profile/README.md.template'
-          substitutions: ${{ steps.build-profile-readme-template-substitutions.outputs.substitutions }}
+    - name: Build Profile README Template Substitutions
+      id: build-profile-readme-template-substitutions
+      uses: ./build-profile-template-substitutions
+      with:
+        repositories: ${{ steps.format-org-repos-info-md.outputs.markdown }}
+        webring: ${{ steps.format-webring-md.outputs.markdown }}
 
-      - name: Write Profile README
-        id: write-profile-readme
-        uses: ./write-profile-readme
-        env:
-          GITHUB_TOKEN: ${{ inputs.github-token }}
-        with:
-          owner: ${{ inputs.owner }}
-          repo: '.github'
-          content: ${{ steps.render-profile-template.outputs.markdown }}
+    - name: Render Profile Template
+      id: render-profile-template
+      uses: ./render-profile-template
+      with:
+        owner: ${{ inputs.owner }}
+        repo: '.github'
+        path: 'profile/README.md.template'
+        substitutions: ${{ steps.build-profile-readme-template-substitutions.outputs.substitutions }}
+
+    - name: Write Profile README
+      id: write-profile-readme
+      uses: ./write-profile-readme
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      with:
+        owner: ${{ inputs.owner }}
+        repo: '.github'
+        content: ${{ steps.render-profile-template.outputs.markdown }}
