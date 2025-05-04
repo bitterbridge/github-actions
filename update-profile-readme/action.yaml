@@ -49,6 +49,8 @@ runs:
       - name: Write Profile README
         id: write-profile-readme
         uses: ./write-profile-readme
+        env:
+          GITHUB_TOKEN: ${{ inputs.github-token }}
         with:
           owner: ${{ inputs.owner }}
           repo: '.github'

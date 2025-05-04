@@ -61,6 +61,8 @@ jobs:
       - name: Write Profile README
         id: write-profile-readme
         uses: ./write-profile-readme
+        env:
+          GITHUB_TOKEN: ${{ steps.get-github-token.outputs.github-token }}
         with:
           owner: 'bitterbridge'
           repo: '.github'
