@@ -16,4 +16,4 @@ outputs:
 
 runs:
   using: "node20"
-  main: "scripts/get-repo-emoji.js"
+  main: "dist/index.js"
