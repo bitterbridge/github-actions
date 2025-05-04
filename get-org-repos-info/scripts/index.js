@@ -42,6 +42,7 @@ const { Octokit } = require('@octokit/rest');
     }
 
     core.setOutput('repos', JSON.stringify(results));
+    console.debug(`Parsed repos: ${JSON.stringify(results)}`);
   } catch (err) {
     core.setFailed(err.message);
   }

@@ -44,7 +44,8 @@ const crypto = require('crypto');
     });
 
     core.setOutput('updated', 'true');
-    console.log("Updated profile README.");
+    console.log('Updated file content:', content);
+    console.log('Updated profile README.');
   } catch (err) {
     core.setFailed(`Failed to update file: ${err.message}`);
   }

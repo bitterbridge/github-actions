@@ -17,6 +17,8 @@ const { Octokit } = require('@octokit/rest');
     });
 
     const emoji = Buffer.from(content.data.content, 'base64').toString().trim();
+    console.debug(`Content of .emoji: ${emoji}`);
+
     core.setOutput('emoji', emoji);
   } catch (err) {
     core.setOutput('emoji', '❓');

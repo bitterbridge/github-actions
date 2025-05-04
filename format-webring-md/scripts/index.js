@@ -19,6 +19,8 @@ const { Buffer } = require('buffer');
     });
 
     const content = Buffer.from(resp.data.content, 'base64').toString();
+    console.debug(`Content of ${path}: ${content}`);
+
     const parsed = yaml.load(content);
 
     if (!parsed.webring || !Array.isArray(parsed.webring)) {
@@ -29,8 +31,10 @@ const { Buffer } = require('buffer');
       const emoji = entry.emoji || '🔗';
       return `${emoji} [${entry.name}](${entry.url})`;
     });
+    console.debug(`Parsed webring entries: ${JSON.stringify(links)}`);
 
     const markdown = `( ${links.join(' | ')} )`;
+    console.debug(`Formatted markdown: ${markdown}`);
 
     core.setOutput('markdown', markdown);
   } catch (err) {

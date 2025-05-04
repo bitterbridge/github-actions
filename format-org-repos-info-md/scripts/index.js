@@ -10,8 +10,10 @@ const core = require('@actions/core');
       const descPart = description ? `: ${description}` : '';
       return `- ${emoji} [${name}](${html_url})${descPart}`;
     });
+    console.debug(`Parsed repos: ${JSON.stringify(lines)}`);
 
     const markdown = lines.join('\n') + '\n';
+    console.debug(`Formatted markdown: ${markdown}`);
     core.setOutput('markdown', markdown);
   } catch (err) {
     core.setFailed(`Failed to format markdown: ${err.message}`);

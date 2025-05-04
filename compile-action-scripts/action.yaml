@@ -1,0 +1,10 @@
+name: "Build All Actions"
+description: "Builds all actions in the repository"
+
+inputs:
+
+outputs:
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

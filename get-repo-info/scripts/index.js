@@ -37,6 +37,7 @@ const { Octokit } = require('@octokit/rest');
     };
 
     core.setOutput('info', JSON.stringify(info));
+    console.debug(`Parsed repo info: ${JSON.stringify(info)}`);
   } catch (err) {
     core.setFailed(err.message);
   }
