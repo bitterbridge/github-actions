@@ -27,3 +27,8 @@ jobs:
     name: "Test Get Repo Emoji"
     needs: [setup]
     uses: ./.github/workflows/test-get-repo-emoji.yaml
+
+  test-get-repo-info:
+    name: "Test Get Repo Info"
+    needs: [setup]
+    uses: ./.github/workflows/test-get-repo-info.yaml

@@ -28,7 +28,15 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/test-get-repo-emoji.yaml
 
+  test-get-repo-info:
+    name: "Test Get Repo Info"
+    needs: [setup]
+    uses: ./.github/workflows/test-get-repo-info.yaml
+
   bump-version:
     name: "Bump version"
-    needs: [test-assume-iam-role, test-get-repo-emoji]
+    needs:
+      - test-assume-iam-role
+      - test-get-repo-emoji
+      - test-get-repo-info
     uses: ./.github/workflows/bump-version.yaml
