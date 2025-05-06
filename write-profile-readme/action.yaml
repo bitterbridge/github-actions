@@ -2,6 +2,9 @@ name: "Write Profile README"
 description: "Writes the profile/README.md file in a repository"
 
 inputs:
+  github-token:
+    required: true
+    description: "GitHub token with repo scope"
   owner:
     required: true
     description: "Owner of the repository"
