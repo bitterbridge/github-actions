@@ -16,7 +16,6 @@ const { Octokit } = require('@octokit/rest');
         per_page: 100,
       });
     } catch (err) {
-      core.setFailed(`Error fetching repos: ${err.message}`);
       repos = await octokit.paginate(octokit.rest.repos.listForUser, {
         username: owner,
         per_page: 100,
