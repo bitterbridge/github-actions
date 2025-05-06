@@ -31767,10 +31767,19 @@ const { Octokit } = __nccwpck_require__(5921);
     const owner = core.getInput('owner');
 
     // Get all repos for the org
-    const repos = await octokit.paginate(octokit.rest.repos.listForOrg, {
-      org: owner,
-      per_page: 100,
-    });
+    let repos;
+    try {
+      repos = await octokit.paginate(octokit.rest.repos.listForOrg, {
+        org: owner,
+        per_page: 100,
+      });
+    } catch (err) {
+      console.warn(`Failed to get org repos: ${err.message}`);
+      repos = await octokit.paginate(octokit.rest.repos.listForUser, {
+        username: owner,
+        per_page: 100,
+      });
+    }
 
     const results = [];
 
