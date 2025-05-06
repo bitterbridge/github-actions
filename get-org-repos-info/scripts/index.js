@@ -20,7 +20,8 @@ const { Octokit } = require('@octokit/rest');
       repos = await octokit.paginate(octokit.rest.repos.listForUser, {
         username: owner,
         per_page: 100,
-      });
+      })
+        .filter(repo => repo.topics.includes('profile'));
     }
 
     const results = [];
