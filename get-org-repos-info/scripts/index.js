@@ -16,6 +16,7 @@ const { Octokit } = require('@octokit/rest');
         per_page: 100,
       });
     } catch (err) {
+      console.warn(`Failed to get org repos: ${err.message}`);
       repos = await octokit.paginate(octokit.rest.repos.listForUser, {
         username: owner,
         per_page: 100,
