@@ -31778,8 +31778,8 @@ const { Octokit } = __nccwpck_require__(5921);
       repos = await octokit.paginate(octokit.rest.repos.listForUser, {
         username: owner,
         per_page: 100,
-      })
-        .filter(repo => repo.topics.includes('profile'));
+      });
+      repos = repos.filter(repo => repo.topics.includes('profile'));
     }
 
     const results = [];
