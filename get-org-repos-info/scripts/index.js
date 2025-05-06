@@ -9,10 +9,19 @@ const { Octokit } = require('@octokit/rest');
     const owner = core.getInput('owner');
 
     // Get all repos for the org
-    const repos = await octokit.paginate(octokit.rest.repos.listForOrg, {
-      org: owner,
-      per_page: 100,
-    });
+    let repos;
+    try {
+      repos = await octokit.paginate(octokit.rest.repos.listForOrg, {
+        org: owner,
+        per_page: 100,
+      });
+    } catch (err) {
+      core.setFailed(`Error fetching repos: ${err.message}`);
+      repos = await octokit.paginate(octokit.rest.repos.listForUser, {
+        username: owner,
+        per_page: 100,
+      });
+    }
 
     const results = [];
 
