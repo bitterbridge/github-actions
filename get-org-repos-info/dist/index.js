@@ -31772,12 +31772,16 @@ const { Octokit } = __nccwpck_require__(5921);
       repos = await octokit.paginate(octokit.rest.repos.listForOrg, {
         org: owner,
         per_page: 100,
+        sort: 'updated',
+        direction: 'desc',
       });
     } catch (err) {
       console.warn(`Failed to get org repos: ${err.message}`);
       repos = await octokit.paginate(octokit.rest.repos.listForUser, {
         username: owner,
         per_page: 100,
+        sort: 'updated',
+        direction: 'desc',
       });
       repos = repos.filter(repo => repo.topics.includes('profile'));
     }
