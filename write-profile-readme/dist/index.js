@@ -31788,7 +31788,10 @@ const crypto = __nccwpck_require__(6982);
       }
 
       existingSha = existing.data.sha;
+      console.log('Existing file content:', existingContent);
+      console.log('Existing file SHA:', existingSha);
     } catch (err) {
+      console.error('Error fetching existing file content:', err);
       if (err.status !== 404) throw err;
     }
 
