@@ -30,7 +30,10 @@ const crypto = require('crypto');
       }
 
       existingSha = existing.data.sha;
+      console.log('Existing file content:', existingContent);
+      console.log('Existing file SHA:', existingSha);
     } catch (err) {
+      console.error('Error fetching existing file content:', err);
       if (err.status !== 404) throw err;
     }
 
