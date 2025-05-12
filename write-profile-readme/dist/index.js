@@ -31778,7 +31778,7 @@ const crypto = __nccwpck_require__(6982);
       const existingContent = Buffer.from(existing.data.content, 'base64').toString();
       const existingEncoded = Buffer.from(existingContent).toString('base64');
 
-      if (existingEncoded === encoded) {
+      if (existingEncoded === content) {
         console.log("No changes to content.");
         core.setOutput('updated', 'false');
         return;
