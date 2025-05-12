@@ -5,6 +5,9 @@ inputs:
   owner:
     required: true
     description: "The owner or organization"
+  github-token:
+    required: true
+    description: "GitHub token with access to the organization"
 
 outputs:
   repos:

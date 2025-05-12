@@ -20,9 +20,8 @@ runs:
     - name: Get Org Repos Info
       id: get-org-repos-info
       uses: bitterbridge/github-actions/get-org-repos-info@main
-      env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
+        github-token: ${{ inputs.github-token }}
         owner: ${{ inputs.owner }}
 
     - name: Format Org Repos Info
