@@ -61,4 +61,4 @@ runs:
         github-token: ${{ inputs.github-token }}
         owner: ${{ inputs.owner }}
         repo: '.github'
-        content: ${{ steps.render-profile-template.outputs.markdown }}
+        content: ${{ steps.render-profile-template.outputs.base64 }}

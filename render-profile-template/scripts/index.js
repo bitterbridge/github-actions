@@ -28,6 +28,7 @@ const { Octokit } = require('@octokit/rest');
     }
     core.setOutput('markdown', markdown);
     console.debug(`Rendered markdown: ${markdown}`);
+    core.setOutput('base64', Buffer.from(markdown).toString('base64'));
   } catch (err) {
     core.setFailed(`Template rendering failed: ${err.message}`);
   }

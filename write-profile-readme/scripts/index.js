@@ -13,9 +13,6 @@ const crypto = require('crypto');
     const content = core.getInput('content');
     const message = core.getInput('message');
 
-    const encoded = Buffer.from(content).toString('base64');
-    const newSha = crypto.createHash('sha1').update(`blob ${content.length}\0${content}`).digest('hex');
-
     let existingSha = null;
 
     try {
@@ -42,12 +39,11 @@ const crypto = require('crypto');
       repo,
       path,
       message,
-      content: encoded,
+      content,
       sha: existingSha || undefined,
     });
 
     core.setOutput('updated', 'true');
-    console.log('Updated file content:', content);
     console.log('Updated profile README.');
   } catch (err) {
     core.setFailed(`Failed to update file: ${err.message}`);

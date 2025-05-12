@@ -16,6 +16,8 @@ inputs:
     description: "JSON object of key-value replacements"
 
 outputs:
+  base64:
+    description: "Base64 encoded string of the rendered template"
   markdown:
     description: "Rendered Markdown output"
 
