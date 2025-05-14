@@ -13,16 +13,16 @@ inputs:
 outputs:
   plan-file:
     description: "The path to the Terraform plan file."
-    value: ${{ steps.terraform-plan.outputs.tf-plan-file }}
+    value: ${{ steps.terraform-plan.outputs.plan-file }}
   plan-exit-code:
     description: "The exit code from the `terraform plan` command."
-    value: ${{ steps.terraform-plan.outputs.tf-plan-exit-code }}
+    value: ${{ steps.terraform-plan.outputs.plan-exit-code }}
   plan-did-change:
     description: "Whether the Terraform plan has changes."
-    value: ${{ steps.terraform-plan.outputs.tf-plan-did-change }}
+    value: ${{ steps.terraform-plan.outputs.plan-did-change }}
   plan-did-fail:
     description: "Whether the Terraform plan failed."
-    value: ${{ steps.terraform-plan.outputs.tf-plan-did-fail }}
+    value: ${{ steps.terraform-plan.outputs.plan-did-fail }}
 
 runs:
   using: composite
