@@ -36033,7 +36033,7 @@ const { Octokit } = __nccwpck_require__(2771);
 
 (async () => {
   try {
-    const token = process.env.GITHUB_TOKEN || process.env.INPUT_TOKEN;
+    const token = process.env.GITHUB_TOKEN || process.env.INPUT_TOKEN || core.getInput('github-token');
     const octokit = new Octokit({ auth: token });
 
     const repo = core.getInput('repo');

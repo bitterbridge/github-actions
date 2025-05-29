@@ -31761,7 +31761,7 @@ const { Octokit } = __nccwpck_require__(2971);
 
 (async () => {
   try {
-    const token = process.env.GITHUB_TOKEN || process.env.INPUT_TOKEN;
+    const token = process.env.GITHUB_TOKEN || process.env.INPUT_TOKEN || core.getInput('github-token');
     const octokit = new Octokit({ auth: token });
 
     const owner = core.getInput('owner');

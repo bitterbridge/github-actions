@@ -8,6 +8,9 @@ inputs:
   path:
     required: false
     default: "profile/webring.yaml"
+  github-token:
+    required: true
+    description: "GitHub token for accessing the repository"
 
 outputs:
   markdown:

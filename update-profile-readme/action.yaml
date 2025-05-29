@@ -36,6 +36,7 @@ runs:
       with:
         owner: 'bitterbridge' # This is static, as the webring is hosted in the bitterbridge org
         repo: '.github'
+        github-token: ${{ inputs.github-token }}
 
     - name: Build Profile README Template Substitutions
       id: build-profile-readme-template-substitutions
@@ -52,6 +53,7 @@ runs:
         repo: '.github'
         path: 'profile/README.md.template'
         substitutions: ${{ steps.build-profile-readme-template-substitutions.outputs.substitutions }}
+        github-token: ${{ inputs.github-token }}
 
     - name: Write Profile README
       id: write-profile-readme
